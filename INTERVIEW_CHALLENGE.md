@@ -22,7 +22,7 @@ Before starting, ensure you have the following installed:
 ## Important Resources
 
 ### 📚 Documentation & Demo Code
-- **Github Repo** : [https://github.com/actn-dev/questions.git](https://github.com/actn-dev/questions.git)
+- **Github Repo** : [https://github.com/arnob016/questions](https://github.com/arnob016/questions)
 - **Horizon API Docs**:
    - https://developers.stellar.org/docs/data/apis/horizon/api-reference/resources/transactions
     
@@ -159,7 +159,7 @@ Before starting, ensure you have the following installed:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/actn-dev/questions.git
+git clone https://github.com/arnob016/questions.git
 cd questions
 ```
 
