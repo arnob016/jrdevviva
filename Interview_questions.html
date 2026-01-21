@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interview Challenge - Stellar Blockchain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.4);
             --bg: #0f172a;
             --bg-card: #1e293b;
             --bg-code: #334155;
@@ -16,6 +24,47 @@
             --border: #334155;
             --success: #22c55e;
             --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+        }
+
+        [data-theme="light"] {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-glow: rgba(79, 70, 229, 0.3);
+            --bg: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-code: #e2e8f0;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
 
         * {
@@ -25,48 +74,79 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             padding: 2rem;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), #a855f7);
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         h2 {
             font-size: 1.75rem;
+            font-weight: 600;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
             color: var(--primary);
             border-bottom: 2px solid var(--border);
             padding-bottom: 0.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--gradient-1);
         }
 
         h3 {
             font-size: 1.25rem;
+            font-weight: 600;
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
             color: #a5b4fc;
         }
 
+        [data-theme="light"] h3 {
+            color: var(--primary);
+        }
+
         h4 {
             font-size: 1.1rem;
+            font-weight: 500;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
             color: #c4b5fd;
+        }
+
+        [data-theme="light"] h4 {
+            color: var(--primary-dark);
         }
 
         p {
@@ -77,42 +157,83 @@
         a {
             color: var(--primary);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid transparent;
         }
 
         a:hover {
             color: #818cf8;
-            text-decoration: underline;
+            border-bottom-color: currentColor;
+        }
+
+        [data-theme="light"] a:hover {
+            color: var(--primary-dark);
         }
 
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 1.5rem;
             margin: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
         }
 
         .task-card {
             border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-glow) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .task-card:hover::before {
+            opacity: 0.1;
         }
 
         .task-card.task-1 { border-left-color: #22c55e; }
+        .task-card.task-1::before { background: linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, transparent 50%); }
         .task-card.task-2 { border-left-color: #f59e0b; }
+        .task-card.task-2::before { background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, transparent 50%); }
         .task-card.task-3 { border-left-color: #ef4444; }
+        .task-card.task-3::before { background: linear-gradient(90deg, rgba(239, 68, 68, 0.2) 0%, transparent 50%); }
 
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 9999px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             margin-right: 0.5rem;
+            letter-spacing: 0.02em;
         }
 
         .badge-time {
-            background: rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
             color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        [data-theme="light"] .badge-time {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(139, 92, 246, 0.1));
+            color: var(--primary);
         }
 
         .status {
@@ -139,25 +260,46 @@
         code {
             background: var(--bg-code);
             padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: 'Fira Code', 'Consolas', monospace;
-            font-size: 0.9em;
+            font-size: 0.875em;
             color: #fbbf24;
+            border: 1px solid var(--border);
+        }
+
+        [data-theme="light"] code {
+            color: #b45309;
         }
 
         pre {
             background: var(--bg-code);
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.25rem;
+            border-radius: 12px;
             overflow-x: auto;
             margin: 1rem 0;
             border: 1px solid var(--border);
+            position: relative;
+        }
+
+        pre::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #f59e0b, 40px 0 0 #22c55e;
         }
 
         pre code {
             background: none;
             padding: 0;
             color: var(--text);
+            border: none;
+            display: block;
+            padding-top: 1rem;
         }
 
         .checklist {
@@ -289,34 +431,96 @@
 
         hr {
             border: none;
-            border-top: 1px solid var(--border);
-            margin: 2rem 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), var(--primary), var(--border), transparent);
+            margin: 3rem 0;
         }
 
         .nav-toc {
             position: fixed;
-            right: 2rem;
+            left: 2rem;
+            top: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            min-width: 200px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .nav-toc.hidden {
+            transform: translateX(calc(-100% - 2rem));
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-toc-toggle {
+            position: fixed;
+            left: 2rem;
             top: 2rem;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 1rem;
-            max-width: 200px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text);
+            cursor: pointer;
             font-size: 0.85rem;
+            z-index: 99;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-toc-toggle:hover {
+            background: var(--bg-code);
+        }
+
+        .nav-toc-toggle.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .nav-toc h4 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-toc .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .nav-toc .close-btn:hover {
             color: var(--text);
         }
 
         .nav-toc ul {
             list-style: none;
             margin: 0;
+            padding: 0;
         }
 
         .nav-toc li {
             margin: 0.25rem 0;
+            padding: 0.15rem 0;
+        }
+
+        .nav-toc a {
+            display: block;
+            padding: 0.2rem 0;
         }
 
         @media (max-width: 1200px) {
@@ -345,8 +549,10 @@
     </style>
 </head>
 <body>
-    <nav class="nav-toc">
-        <h4>Contents</h4>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    <button class="nav-toc-toggle hidden" onclick="toggleToc()">☰ Contents</button>
+    <nav class="nav-toc" id="navToc">
+        <h4>Contents <button class="close-btn" onclick="toggleToc()">×</button></h4>
         <ul>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#resources">Resources</a></li>
@@ -355,8 +561,44 @@
             <li><a href="#task1">Task 1</a></li>
             <li><a href="#task2">Task 2</a></li>
             <li><a href="#task3">Task 3</a></li>
+            <li><a href="#project-structure">Project Structure</a></li>
+            <li><a href="#tips">Tips</a></li>
+            <li><a href="#stellar-context">Stellar Context</a></li>
         </ul>
     </nav>
+
+    <script>
+        function toggleToc() {
+            const nav = document.getElementById('navToc');
+            const btn = document.querySelector('.nav-toc-toggle');
+            nav.classList.toggle('hidden');
+            btn.classList.toggle('hidden');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeToggle');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme');
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        (function() {
+            const saved = localStorage.getItem('theme');
+            const btn = document.getElementById('themeToggle');
+            if (saved === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                if (btn) btn.textContent = '☀️';
+            }
+        })();
+    </script>
 
     <div class="container">
         <h1>Interview Challenge</h1>
@@ -436,17 +678,20 @@ npm run dev</code></pre>
                 <h3>1. Install dependencies (if not done)</h3>
                 <pre><code>npm install</code></pre>
 
-                <h3>2. Start the dev server</h3>
+                <h3>2. Push database schema</h3>
+                <pre><code>npm run db:push</code></pre>
+
+                <h3>3. Start the dev server</h3>
                 <pre><code>npm run dev</code></pre>
 
-                <h3>3. Explore demo scripts</h3>
+                <h3>4. Explore demo scripts</h3>
                 <pre><code># See Horizon API examples
 npx tsx scripts/api_demo.ts
 
 # See Stellar SDK examples
 npx tsx scripts/sdk_demo.ts</code></pre>
 
-                <h3>4. Open the app</h3>
+                <h3>5. Open the app</h3>
                 <p>Navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
             </div>
         </section>
@@ -613,7 +858,7 @@ npx tsx scripts/sdk_demo.ts</code></pre>
 
         <hr>
 
-        <section>
+        <section id="project-structure">
             <h2>Project Structure</h2>
             <pre class="file-tree"><span class="folder">scripts/</span>
 ├── <span class="file">api_demo.ts</span>           # Horizon API examples
@@ -707,7 +952,7 @@ npx tsx scripts/sdk_demo.ts</code></pre>
 
         <hr>
 
-        <section>
+        <section id="tips">
             <h2>Tips</h2>
 
             <div class="card">
@@ -725,7 +970,7 @@ npx tsx scripts/sdk_demo.ts</code></pre>
 
         <hr>
 
-        <section>
+        <section id="stellar-context">
             <h2>Stellar Data Context</h2>
 
             <div class="grid-2">
