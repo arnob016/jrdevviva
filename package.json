@@ -1,0 +1,13 @@
+{
+  "name": "interview-questions",
+  "version": "1.0.0",
+  "description": "Interview Challenge - Stellar Blockchain",
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site - no build required'",
+    "start": "npx serve public"
+  },
+  "keywords": ["stellar", "blockchain", "interview"],
+  "author": "",
+  "license": "MIT"
+}
