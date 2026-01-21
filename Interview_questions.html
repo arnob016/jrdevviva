@@ -207,6 +207,9 @@
             padding: 1rem;
             border-radius: 8px;
             line-height: 1.8;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 0;
         }
 
         .file-tree .folder {
@@ -347,10 +350,11 @@
         <ul>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#resources">Resources</a></li>
+            <li><a href="#current-state">Current State</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
             <li><a href="#task1">Task 1</a></li>
             <li><a href="#task2">Task 2</a></li>
             <li><a href="#task3">Task 3</a></li>
-            <li><a href="#getting-started">Getting Started</a></li>
         </ul>
     </nav>
 
@@ -360,15 +364,6 @@
         <section id="overview">
             <h2>Overview</h2>
             <p>This is a <strong>real-world coding challenge</strong> working with Stellar blockchain data. You'll enhance a basic transaction viewer by implementing proper data display, modal views, and database persistence using Next.js, tRPC, and Stellar SDK/API.</p>
-
-            <h3>Current State</h3>
-            <div class="card">
-                <p class="status"><span class="status-icon">✅</span> Basic transaction fetching via tRPC</p>
-                <p class="status"><span class="status-icon">✅</span> Stellar API/SDK demo files in <code>scripts/</code> folder</p>
-                <p class="status"><span class="status-icon">✅</span> Helper files: <code>lib/stellar/trx-api.ts</code> and <code>lib/stellar/trx-sdk.ts</code></p>
-                <p class="status"><span class="status-icon">✅</span> shadcn/ui components installed (Card, Dialog, Skeleton)</p>
-                <p class="status"><span class="status-icon">✅</span> Drizzle ORM configured for database</p>
-            </div>
         </section>
 
         <hr>
@@ -416,6 +411,43 @@ npm run dev</code></pre>
                     <li><code>lib/stellar/trx-sdk.ts</code> - Stellar SDK approach</li>
                 </ul>
                 <p><strong>Note:</strong> You can use either Horizon API or Stellar SDK - choose what you prefer!</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="current-state">
+            <h2>Current State</h2>
+            <div class="card">
+                <p class="status"><span class="status-icon">✅</span> Basic transaction fetching via tRPC</p>
+                <p class="status"><span class="status-icon">✅</span> Stellar API/SDK demo files in <code>scripts/</code> folder</p>
+                <p class="status"><span class="status-icon">✅</span> Helper files: <code>lib/stellar/trx-api.ts</code> and <code>lib/stellar/trx-sdk.ts</code></p>
+                <p class="status"><span class="status-icon">✅</span> shadcn/ui components installed (Card, Dialog, Skeleton)</p>
+                <p class="status"><span class="status-icon">✅</span> Drizzle ORM configured for database</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+
+            <div class="card">
+                <h3>1. Install dependencies (if not done)</h3>
+                <pre><code>npm install</code></pre>
+
+                <h3>2. Start the dev server</h3>
+                <pre><code>npm run dev</code></pre>
+
+                <h3>3. Explore demo scripts</h3>
+                <pre><code># See Horizon API examples
+npx tsx scripts/api_demo.ts
+
+# See Stellar SDK examples
+npx tsx scripts/sdk_demo.ts</code></pre>
+
+                <h3>4. Open the app</h3>
+                <p>Navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
             </div>
         </section>
 
@@ -581,34 +613,9 @@ npm run dev</code></pre>
 
         <hr>
 
-        <section id="getting-started">
-            <h2>Getting Started</h2>
-
-            <div class="card">
-                <h3>1. Install dependencies (if not done)</h3>
-                <pre><code>npm install</code></pre>
-
-                <h3>2. Start the dev server</h3>
-                <pre><code>npm run dev</code></pre>
-
-                <h3>3. Explore demo scripts</h3>
-                <pre><code># See Horizon API examples
-npx tsx scripts/api_demo.ts
-
-# See Stellar SDK examples
-npx tsx scripts/sdk_demo.ts</code></pre>
-
-                <h3>4. Open the app</h3>
-                <p>Navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
-            </div>
-        </section>
-
-        <hr>
-
         <section>
             <h2>Project Structure</h2>
-            <div class="file-tree">
-<span class="folder">scripts/</span>
+            <pre class="file-tree"><span class="folder">scripts/</span>
 ├── <span class="file">api_demo.ts</span>           # Horizon API examples
 ├── <span class="file">sdk_demo.ts</span>           # Stellar SDK examples  
 └── <span class="file">account.ts</span>            # Account data & response examples
@@ -630,8 +637,7 @@ npx tsx scripts/sdk_demo.ts</code></pre>
     ├── <span class="file">card.tsx</span>
     ├── <span class="file">dialog.tsx</span>
     ├── <span class="file">skeleton.tsx</span>
-    └── <span class="file">button.tsx</span>
-            </div>
+    └── <span class="file">button.tsx</span></pre>
         </section>
 
         <hr>
