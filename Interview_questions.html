@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Challenge - Stellar Blockchain</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #a5b4fc;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #c4b5fd;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #818cf8;
+            text-decoration: underline;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .task-card {
+            border-left: 4px solid var(--primary);
+        }
+
+        .task-card.task-1 { border-left-color: #22c55e; }
+        .task-card.task-2 { border-left-color: #f59e0b; }
+        .task-card.task-3 { border-left-color: #ef4444; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-time {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-icon {
+            color: var(--success);
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        code {
+            background: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9em;
+            color: #fbbf24;
+        }
+
+        pre {
+            background: var(--bg-code);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .file-tree {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-code);
+            padding: 1rem;
+            border-radius: 8px;
+            line-height: 1.8;
+        }
+
+        .file-tree .folder {
+            color: #60a5fa;
+        }
+
+        .file-tree .file {
+            color: var(--text-muted);
+        }
+
+        .file-tree .highlight-file {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .endpoint-box {
+            background: var(--bg-code);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+        }
+
+        .method {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .tip-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box h4 {
+            color: #22c55e;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .time-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .time-table th,
+        .time-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .time-table th {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .time-table td {
+            color: var(--text-muted);
+        }
+
+        .rocket {
+            font-size: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        .nav-toc {
+            position: fixed;
+            right: 2rem;
+            top: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            max-width: 200px;
+            font-size: 0.85rem;
+        }
+
+        .nav-toc h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .nav-toc ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .nav-toc li {
+            margin: 0.25rem 0;
+        }
+
+        @media (max-width: 1200px) {
+            .nav-toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-toc">
+        <h4>Contents</h4>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#task1">Task 1</a></li>
+            <li><a href="#task2">Task 2</a></li>
+            <li><a href="#task3">Task 3</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Interview Challenge</h1>
+
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>This is a <strong>real-world coding challenge</strong> working with Stellar blockchain data. You'll enhance a basic transaction viewer by implementing proper data display, modal views, and database persistence using Next.js, tRPC, and Stellar SDK/API.</p>
+
+            <h3>Current State</h3>
+            <div class="card">
+                <p class="status"><span class="status-icon">✅</span> Basic transaction fetching via tRPC</p>
+                <p class="status"><span class="status-icon">✅</span> Stellar API/SDK demo files in <code>scripts/</code> folder</p>
+                <p class="status"><span class="status-icon">✅</span> Helper files: <code>lib/stellar/trx-api.ts</code> and <code>lib/stellar/trx-sdk.ts</code></p>
+                <p class="status"><span class="status-icon">✅</span> shadcn/ui components installed (Card, Dialog, Skeleton)</p>
+                <p class="status"><span class="status-icon">✅</span> Drizzle ORM configured for database</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="resources">
+            <h2>Important Resources</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📚 Documentation & Demo Code</h3>
+                    <h4>Horizon API Docs</h4>
+                    <ul>
+                        <li><a href="https://developers.stellar.org/docs/data/apis/horizon/api-reference/resources/transactions" target="_blank">Transactions API</a></li>
+                        <li><a href="https://developers.stellar.org/docs/data/apis/horizon/api-reference/resources/accounts" target="_blank">Accounts API</a></li>
+                    </ul>
+                    <h4>Stellar SDK Docs</h4>
+                    <ul>
+                        <li><a href="https://stellar.github.io/js-stellar-sdk/module-Horizon.Server.html#transactions" target="_blank">Horizon.Server Transactions</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>📁 Demo Files</h3>
+                    <ul>
+                        <li><code>scripts/api_demo.ts</code> - Horizon API examples</li>
+                        <li><code>scripts/sdk_demo.ts</code> - Stellar SDK examples</li>
+                        <li><code>scripts/account.ts</code> - Account setup and response examples</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🛠️ Implementation Files</h3>
+                <ul>
+                    <li><code>lib/stellar/trx-api.ts</code> - Direct Horizon API approach</li>
+                    <li><code>lib/stellar/trx-sdk.ts</code> - Stellar SDK approach</li>
+                </ul>
+                <p><strong>Note:</strong> You can use either Horizon API or Stellar SDK - choose what you prefer!</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="task1">
+            <h2>Your Tasks</h2>
+
+            <div class="card task-card task-1">
+                <h3>Task 1: Debug & Display Proper Transaction Data</h3>
+                <span class="badge badge-time">⏱️ 20 minutes</span>
+
+                <h4>Current Problem:</h4>
+                <ul>
+                    <li>Transaction data is displayed but may not show all relevant information</li>
+                    <li>No loading states or skeletons</li>
+                    <li>No pagination - showing all transactions at once</li>
+                </ul>
+
+                <h4>Requirements:</h4>
+
+                <p><strong>1. Debug the Data</strong> - Review what transaction data is available and display useful information:</p>
+                <ul>
+                    <li>Transaction hash (clickable)</li>
+                    <li>Timestamp (readable format, not UTC string)</li>
+                    <li>Source account (shortened)</li>
+                    <li>Operation count</li>
+                    <li>Fee charged (in XLM)</li>
+                    <li>Success/failure status</li>
+                    <li>Memo (if present)</li>
+                </ul>
+
+                <p><strong>2. Add Loading Skeleton</strong> - Replace "Loading..." with proper skeleton screens</p>
+                <ul>
+                    <li>Use shadcn <code>Skeleton</code> component</li>
+                    <li>Show skeleton cards while data loads</li>
+                </ul>
+
+                <p><strong>3. Implement Pagination</strong> - Add client-side or server-side pagination</p>
+                <ul>
+                    <li>Show 20 transactions per page</li>
+                    <li>Add Previous/Next buttons</li>
+                    <li>Display current page and total pages</li>
+                    <li>Consider using shadcn <code>Button</code> component</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="task2">
+            <div class="card task-card task-2">
+                <h3>Task 2: Transaction Details Modal with Operations</h3>
+                <span class="badge badge-time">⏱️ 25 minutes</span>
+
+                <h4>Current Problem:</h4>
+                <ul>
+                    <li>Users can't see transaction details or operations</li>
+                    <li>No way to view XDR, source account details, or grouped operations</li>
+                </ul>
+
+                <h4>Requirements:</h4>
+
+                <p><strong>1. Click to View Details</strong> - When clicking a transaction card:</p>
+                <ul>
+                    <li>Open a modal using shadcn's <code>Dialog</code> component</li>
+                    <li>Fetch transaction details (if not already available)</li>
+                    <li>Show comprehensive transaction information:
+                        <ul>
+                            <li>Full transaction hash</li>
+                            <li>Source account (full address)</li>
+                            <li>Ledger number</li>
+                            <li>Timestamp</li>
+                            <li>Fee charged</li>
+                            <li>Memo and memo type</li>
+                            <li><strong>Envelope XDR</strong> (transaction envelope)</li>
+                            <li>Result XDR (if available)</li>
+                            <li>Success/failure status</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>2. Display Operations</strong> - Show all operations for this transaction:</p>
+                <ul>
+                    <li>Operation type</li>
+                    <li>Operation details (from, to, amount, asset)</li>
+                    <li>Source account for each operation</li>
+                    <li>Group operations by transaction ID</li>
+                </ul>
+
+                <p><strong>3. Operations in Main View</strong> - In the transaction list:</p>
+                <ul>
+                    <li>Show operation count per transaction</li>
+                    <li>Consider adding operation type badges</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4>💡 Hints</h4>
+                    <ul>
+                        <li>Use <code>api.transaction.getById</code> tRPC endpoint</li>
+                        <li>Fetch operations: <code>https://horizon.stellar.org/transactions/{transactionId}/operations</code></li>
+                        <li>Or SDK: <code>server.operations().forTransaction(transactionId).call()</code></li>
+                        <li>Display XDR in a scrollable code block (use <code>font-mono</code> class)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="task3">
+            <div class="card task-card task-3">
+                <h3>Task 3: Database Persistence</h3>
+                <span class="badge badge-time">⏱️ 25 minutes</span>
+
+                <h4>Current Problem:</h4>
+                <ul>
+                    <li>All data is fetched from Stellar API each time</li>
+                    <li>No data persistence</li>
+                    <li>No ability to track historical data</li>
+                </ul>
+
+                <h4>Requirements:</h4>
+
+                <p><strong>1. Create Database Schema</strong> - Design tables for:</p>
+                
+                <div class="highlight">
+                    <p><strong>Transactions table:</strong></p>
+                    <code>id, hash, timestamp, source_account, operation_count, successful, ledger, fee_charged, memo, memo_type, envelope_xdr, result_xdr, created_at, updated_at</code>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>Operations table:</strong></p>
+                    <code>id, transaction_id (foreign key), operation_type, source_account, amount, asset_code, asset_type, from_account, to_account, created_at</code>
+                </div>
+
+                <p><strong>2. Implement Data Storage</strong> - When fetching transactions:</p>
+                <ul>
+                    <li>Save/update transactions in database</li>
+                    <li>Save/update operations in database</li>
+                    <li>Handle duplicates (upsert logic)</li>
+                </ul>
+
+                <p><strong>3. Query from Database</strong> - Update tRPC endpoints:</p>
+                <ul>
+                    <li>Fetch from database first</li>
+                    <li>Fall back to Stellar API if needed</li>
+                    <li>Implement pagination at database level</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4>💡 Hints</h4>
+                    <ul>
+                        <li>Use Drizzle ORM (already configured)</li>
+                        <li>Schema location: <code>src/server/db/schema.ts</code></li>
+                        <li>Check existing post schema as reference</li>
+                        <li>Use <code>db:push</code> script to push schema changes</li>
+                    </ul>
+                </div>
+
+                <p><strong>Files to modify:</strong></p>
+                <ul>
+                    <li><code>src/server/db/schema.ts</code></li>
+                    <li><code>src/server/api/routers/transaction.ts</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+
+            <div class="card">
+                <h3>1. Install dependencies (if not done)</h3>
+                <pre><code>npm install</code></pre>
+
+                <h3>2. Start the dev server</h3>
+                <pre><code>npm run dev</code></pre>
+
+                <h3>3. Explore demo scripts</h3>
+                <pre><code># See Horizon API examples
+npx tsx scripts/api_demo.ts
+
+# See Stellar SDK examples
+npx tsx scripts/sdk_demo.ts</code></pre>
+
+                <h3>4. Open the app</h3>
+                <p>Navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Project Structure</h2>
+            <div class="file-tree">
+<span class="folder">scripts/</span>
+├── <span class="file">api_demo.ts</span>           # Horizon API examples
+├── <span class="file">sdk_demo.ts</span>           # Stellar SDK examples  
+└── <span class="file">account.ts</span>            # Account data & response examples
+<span class="folder">src/</span>
+├── <span class="folder">app/</span>
+│   ├── <span class="file">page.tsx</span>          # Main page
+│   └── <span class="folder">_components/</span>
+│       └── <span class="highlight-file">transaction-list.tsx</span>  # YOUR MAIN WORK FILE
+├── <span class="folder">lib/stellar/</span>
+│   ├── <span class="file">trx-api.ts</span>        # Horizon API methods (currently used)
+│   └── <span class="file">trx-sdk.ts</span>        # Stellar SDK methods
+├── <span class="folder">server/</span>
+│   ├── <span class="folder">db/</span>
+│   │   ├── <span class="file">index.ts</span>      # Database client
+│   │   └── <span class="highlight-file">schema.ts</span>     # Database schema (YOU'LL MODIFY)
+│   └── <span class="folder">api/routers/</span>
+│       └── <span class="highlight-file">transaction.ts</span> # tRPC router (YOU'LL MODIFY)
+└── <span class="folder">components/ui/</span>        # shadcn components
+    ├── <span class="file">card.tsx</span>
+    ├── <span class="file">dialog.tsx</span>
+    ├── <span class="file">skeleton.tsx</span>
+    └── <span class="file">button.tsx</span>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Available tRPC Endpoints</h2>
+
+            <div class="endpoint-box">
+                <code>api.transaction.getAll.useQuery({ publicKey: string })</code>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Returns all transactions for an account.</p>
+            </div>
+
+            <div class="endpoint-box">
+                <code>api.transaction.getById.useQuery({ id: string })</code>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Returns single transaction details (currently not implemented - you'll build this!).</p>
+            </div>
+
+            <div class="endpoint-box">
+                <code>api.transaction.getAcc.useQuery({ publicKey: string })</code>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Returns account information including balance.</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <hr>
+
+        <section>
+            <h2>Time Management</h2>
+
+            <table class="time-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Time</th>
+                        <th>Focus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Task 1</td>
+                        <td>~30 minutes</td>
+                        <td>Data display, skeleton, pagination</td>
+                    </tr>
+                    <tr>
+                        <td>Task 2</td>
+                        <td>~30 minutes</td>
+                        <td>Modal, operations, XDR display</td>
+                    </tr>
+                    <tr>
+                        <td>Task 3</td>
+                        <td>~30 minutes</td>
+                        <td>Schema, persistence, queries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>~90 min</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight">
+                <strong>Prioritize:</strong> Task 1 → Task 2 → Task 3
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Tips</h2>
+
+            <div class="card">
+                <ol>
+                    <li><strong>Explore the demo files first</strong> - Run the scripts to understand the data structure</li>
+                    <li><strong>Choose your approach</strong> - API or SDK, pick what feels more comfortable</li>
+                    <li><strong>Start with displaying data</strong> - Get the UI working before adding database</li>
+                    <li><strong>Use TypeScript types</strong> - Define interfaces for your data</li>
+                    <li><strong>Test incrementally</strong> - Check each feature works before moving on</li>
+                    <li><strong>Check the docs</strong> - Horizon API and SDK docs are your friends</li>
+                    <li><strong>Don't overthink</strong> - Working solution > perfect solution</li>
+                </ol>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Stellar Data Context</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>What are Transactions?</h3>
+                    <ul>
+                        <li>A transaction contains one or more operations</li>
+                        <li>Each transaction has an XDR (External Data Representation)</li>
+                        <li>Transactions are grouped in ledgers</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>What are Operations?</h3>
+                    <ul>
+                        <li>Operations are actions: payments, account creation, etc.</li>
+                        <li>Multiple operations can be in one transaction</li>
+                        <li>Each operation has specific fields based on type</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Useful Endpoints</h3>
+            <div class="endpoint-box">
+                <p><span class="method">GET</span> <code>https://horizon.stellar.org/accounts/{accountId}</code></p>
+                <p style="color: var(--text-muted); margin-top: 0.25rem;">Account info</p>
+            </div>
+            <div class="endpoint-box">
+                <p><span class="method">GET</span> <code>https://horizon.stellar.org/accounts/{accountId}/transactions</code></p>
+                <p style="color: var(--text-muted); margin-top: 0.25rem;">Transactions for account</p>
+            </div>
+            <div class="endpoint-box">
+                <p><span class="method">GET</span> <code>https://horizon.stellar.org/transactions/{transactionId}/operations</code></p>
+                <p style="color: var(--text-muted); margin-top: 0.25rem;">Operations for transaction</p>
+            </div>
+            <div class="endpoint-box">
+                <p><span class="method">GET</span> <code>https://horizon.stellar.org/transactions/{transactionId}</code></p>
+                <p style="color: var(--text-muted); margin-top: 0.25rem;">Single transaction details</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Need Help?</h2>
+
+            <div class="card">
+                <p>If you get stuck:</p>
+                <ol>
+                    <li>Check browser console for errors</li>
+                    <li>Review demo scripts in <code>scripts/</code> folder</li>
+                    <li>Check Horizon API docs: <a href="https://developers.stellar.org/docs/data/apis/horizon" target="_blank">https://developers.stellar.org/docs/data/apis/horizon</a></li>
+                    <li>Check SDK docs: <a href="https://stellar.github.io/js-stellar-sdk/" target="_blank">https://stellar.github.io/js-stellar-sdk/</a></li>
+                    <li>Look at existing <code>trx-api.ts</code> implementation</li>
+                </ol>
+            </div>
+        </section>
+
+        <hr>
+
+        <p style="text-align: center; font-size: 1.25rem; margin-top: 2rem;">
+            <strong>Good luck! Focus on working code and clear data presentation. Show us your problem-solving skills!</strong> <span class="rocket">🚀</span>
+        </p>
+    </div>
+</body>
+</html>
